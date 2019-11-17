@@ -7,6 +7,7 @@ public class NavMeshMovement : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Camera cam;
+    public GameObject particle;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,15 +19,20 @@ public class NavMeshMovement : MonoBehaviour
     {
         Ray ray1 = new Ray();
         if(Input.GetMouseButtonDown(0))
-            ray1 = cam.ScreenPointToRay(Input.mousePosition);
-
-        Debug.DrawRay(ray1.origin,ray1.direction * 200,Color.red);
-
-        RaycastHit hit;
-
-        if(Physics.Raycast(ray1.origin,ray1.direction,out hit,Mathf.Infinity))
         {
-            agent.destination = hit.point;
+             ray1 = cam.ScreenPointToRay(Input.mousePosition);
+
+            RaycastHit hit;
+
+            if(Physics.Raycast(ray1.origin,ray1.direction,out hit,Mathf.Infinity))
+            {
+                agent.destination = hit.point;
+            }
+
+            Instantiate(particle,hit.point,particle.transform.rotation);
         }
+           
+
+
     }
 }

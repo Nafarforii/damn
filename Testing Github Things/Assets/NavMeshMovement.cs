@@ -16,10 +16,17 @@ public class NavMeshMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Ray ray1 = new Ray();
+        if(Input.GetMouseButtonDown(0))
+            ray1 = cam.ScreenPointToRay(Input.mousePosition);
 
-        Debug.DrawRay(ray.origin,ray.direction * 200,Color.red);
+        Debug.DrawRay(ray1.origin,ray1.direction * 200,Color.red);
 
-        
+        RaycastHit hit;
+
+        if(Physics.Raycast(ray1.origin,ray1.direction,out hit,Mathf.Infinity))
+        {
+            agent.destination = hit.point;
+        }
     }
 }
